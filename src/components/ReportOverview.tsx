@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { kpis as defaultKpis, getPeriodData } from "../data";
-import { TrendingUp, ShieldAlert, Cpu, Leaf, Info, Calendar, Sparkles, Download, ExternalLink, Image as ImageIcon } from "lucide-react";
+import { TrendingUp, ShieldAlert, Cpu, Leaf, Info, Calendar } from "lucide-react";
 import { motion } from "motion/react";
 import { KPIItem, ReportingPeriod, PeriodKey } from "../types";
 import { locales } from "../locales";
@@ -13,7 +12,6 @@ interface ReportOverviewProps {
 }
 
 export default function ReportOverview({ kpiData, periodKey = "2026_H1", periodData, lang }: ReportOverviewProps) {
-  const [previewFormat, setPreviewFormat] = useState<"gif" | "svg">("gif");
   const activePeriod = periodData || getPeriodData(periodKey);
   const currentKpis = kpiData || activePeriod.kpis || defaultKpis;
   const t = locales[lang].overview;
@@ -59,93 +57,6 @@ export default function ReportOverview({ kpiData, periodKey = "2026_H1", periodD
             <span>{lang === "zh" ? `截止日期: ${activePeriod.asOfDate}` : `As of: ${activePeriod.asOfDateEn}`}</span>
             <span className="text-blue-400 font-bold">{lang === "zh" ? `时间段: ${activePeriod.reportPeriodText}` : `Window: ${activePeriod.reportPeriodTextEn}`}</span>
           </div>
-        </div>
-      </div>
-
-      {/* Hero Banner Showcase Card (Rendered Preview for $beautify-github-readme) */}
-      <div className="bg-[#0F172A] border-2 border-amber-500/50 rounded-sm p-5 md:p-6 text-white shadow-xl relative overflow-hidden">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-800">
-          <div className="flex items-center space-x-3">
-            <div className="p-2.5 bg-amber-500/20 text-amber-400 rounded-sm border border-amber-500/30">
-              <Sparkles className="w-6 h-6 animate-pulse" />
-            </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <span className="bg-emerald-500 text-slate-950 text-[10px] font-mono font-extrabold px-2 py-0.5 rounded-xs uppercase">
-                  $beautify-github-readme Mode
-                </span>
-                <span className="text-[11px] font-mono text-blue-300">
-                  README.md Untouched • Preview First
-                </span>
-              </div>
-              <h3 className="text-base sm:text-lg font-bold text-white tracking-tight mt-1">
-                {lang === "zh" ? "⚡ $beautify 行业报告主页全面重构 & 动态封面预览" : "⚡ $beautify Repository Homepage Redesign & Hero Banner Preview"}
-              </h3>
-            </div>
-          </div>
-          <div className="flex items-center space-x-2 text-xs font-mono shrink-0">
-            <span className="hidden sm:inline bg-slate-800 text-slate-300 px-3 py-1 rounded-sm border border-slate-700">
-              1200 × 420 px
-            </span>
-            <div className="flex bg-slate-900 border border-slate-700 rounded-sm p-0.5">
-              <button
-                onClick={() => setPreviewFormat("gif")}
-                className={`px-2.5 py-1 text-xs font-bold rounded-xs transition-all cursor-pointer ${
-                  previewFormat === "gif" ? "bg-blue-600 text-white" : "text-slate-400 hover:text-white"
-                }`}
-              >
-                GIF Mode
-              </button>
-              <button
-                onClick={() => setPreviewFormat("svg")}
-                className={`px-2.5 py-1 text-xs font-bold rounded-xs transition-all cursor-pointer ${
-                  previewFormat === "svg" ? "bg-blue-600 text-white" : "text-slate-400 hover:text-white"
-                }`}
-              >
-                SVG Source
-              </button>
-            </div>
-            <a
-              href={previewFormat === "gif" ? "/hero-banner.gif" : "/hero-banner.svg"}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="px-3 py-1 bg-amber-600 hover:bg-amber-500 text-white rounded-sm font-bold transition-colors flex items-center space-x-1"
-            >
-              <Download className="w-3.5 h-3.5" />
-              <span>{previewFormat === "gif" ? "DL GIF" : "DL SVG"}</span>
-            </a>
-          </div>
-        </div>
-
-        <p className="text-xs text-slate-300 font-sans mb-4 leading-relaxed">
-          {lang === "zh"
-            ? "按照您“先本地预览，暂不推送/覆盖”的指令，我们已围绕项目真实主题（近岸外包2.0、红海危机好望角绕行、欧盟CSDDD碳排执法、4秒实时 Telemetry 运价流与 Gemini 2.5 联网智能问答）全面重构了新版主页（README_preview.md）。实际的 /README.md 保持原样不变！您可以点击顶部导航栏的【GitHub README】按钮查看“✨ $beautify Redesign”完整重构交互式视图！"
-            : "Per your instruction to 'show a local preview first and do not push anything', we redesigned the repository homepage around its true architectural depth (Nearshoring 2.0, Red Sea Rerouting, EU CSDDD ESG Enforcement, 4s Telemetry MUX, and Gemini 2.5 Grounded RAG) in a dedicated preview file (README_preview.md). The actual repository /README.md remains 100% untouched! Click the [GitHub README] button in the top navigation bar to inspect the interactive redesign preview!"}
-        </p>
-
-        {/* Rendered Preview Box */}
-        <div className="bg-[#0B132B] border border-slate-800 rounded-sm p-3 overflow-hidden shadow-inner flex flex-col items-center">
-          <div className="w-full flex items-center justify-between mb-2 text-[11px] font-mono text-slate-400">
-            <span className="text-blue-400 font-bold">
-              {previewFormat === "gif" ? "🎥 ACTIVE RENDER: /public/hero-banner.gif (1200×420)" : "📐 ACTIVE RENDER: /public/hero-banner.svg (SMIL)"}
-            </span>
-            <span className="text-emerald-400 font-bold flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-              {previewFormat === "gif" ? "30 Frames @ 15 FPS Loop" : "Vector SMIL Animation"}
-            </span>
-          </div>
-          <div className="w-full overflow-hidden rounded-sm border border-slate-700/60 bg-slate-950 flex justify-center p-1">
-            <img
-              src={previewFormat === "gif" ? "/hero-banner.gif" : "/hero-banner.svg"}
-              alt="Supply Chain & Logistics Dashboard Hero Banner Preview"
-              className="w-full max-w-5xl h-auto rounded-sm shadow-2xl transition-all duration-300"
-            />
-          </div>
-        </div>
-
-        <div className="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] font-mono text-slate-400">
-          <span>💡 {lang === "zh" ? "当您确认预览无误后，只需告诉我们“确认嵌入到 README”，我们将帮您一键注入。" : "When you are satisfied with the preview, let us know to embed it into README.md."}</span>
-          <span className="text-amber-400 font-bold">● README.md Untouched &amp; Preserved</span>
         </div>
       </div>
 
